@@ -1,0 +1,105 @@
+-> Descrição do sistema de posicionamento
+- Motor de passo Nema 17 - 3,5 Kgf.cm/ 1,2A (Action)
+-- Descrição: SM1.8-A1740SCHBK-CS
+-- Torque: 3.5 kgf.cm
+-- Diâmetro do eixo: 5.0 mm
+-- Flange: NEMA 17 (44 x 44 mm)
+-- Comprimento da carcaça: 40 mm
+-- Corrente por fase: 1,2 A
+-- Quantidade de fios: 4
+-- Resolução: 200 PPR
+-- Temperatura de operação: -20 ~ 50 °C
+--*Cálculo de passos/mm: passos/mm = (passos/revolução * micropassos)/mm_percorridos/revolução
+			pssos/mm = (200*4)/2 -> passos/mm = 400
+- Micro servo 9G SG90 (TowerPro)
+-- Descrição: SG90
+-- Tensão de alimentação: 3,0 - 6,0V
+-- Corrente de operação: 0,1 - 1,2A
+-- Temperatura de operação: -30~60°C
+-- Velocidade 0,12 seg/60°: (sem carga)
+-- Torque a 4.8V: 1,2 kg.cm 
+-- Torque a 6V: 1,6 kg.cm
+
+-> Inskscape
+- https://inkscape.org/pt-br/#baixar-agora
+- Plugin Inkscape
+-- MI Inskscape Extension: https://www.mediafire.com/file/9x1m60w1x6tdhaw/MI_Inkscape_Extension.zip/file
+-- Explicação no youtube: 	- https://www.youtube.com/watch?v=k1vzT-T8LJA&list=PLR3ZfTamfiZBysCW03l3yx9nvJPxa8eHh&index=18
+				- https://www.youtube.com/watch?v=d8ZynbxfBDo&list=PLR3ZfTamfiZBysCW03l3yx9nvJPxa8eHh&index=19
+				- https://www.youtube.com/watch?v=d8ZynbxfBDo&list=PLR3ZfTamfiZBysCW03l3yx9nvJPxa8eHh&index=19
+				- https://www.youtube.com/watch?v=vRAaXrJJf6s&list=PLR3ZfTamfiZBysCW03l3yx9nvJPxa8eHh&index=20
+
+-> GRBL
+-- Grbl wiki: https://github.com/gnea/grbl/wiki
+	- Mais infomrações no menu laterial na aba Using Grbl
+	- Explicação no youtube: - https://www.youtube.com/watch?v=FxSQK1lNMWQ&list=PLQXjHQyol0PLu2CiZvvriB8hR2GFEOB8K
+				 - https://www.youtube.com/watch?v=31R_Bgd5L_k&list=PLQXjHQyol0PLu2CiZvvriB8hR2GFEOB8K&index=3
+				 - https://www.youtube.com/watch?v=-D_rNyWcAHM&list=PLQXjHQyol0PLu2CiZvvriB8hR2GFEOB8K&index=3
+				 - https://www.youtube.com/watch?v=7e8LuDyUjBY&list=PLQXjHQyol0PLu2CiZvvriB8hR2GFEOB8K&index=5
+				 - https://www.youtube.com/watch?v=kED3sOoTTg4&list=PLQXjHQyol0PLu2CiZvvriB8hR2GFEOB8K&index=6
+				 - https://www.youtube.com/watch?v=W7E0S6dM7tU&list=PLFaCm8C4CKG9-HOPlHiShVIihmY6uEM3v&index=20
+				 - https://www.youtube.com/watch?v=Q9xwwy_jvPA&list=PLQXjHQyol0PLqXEQg0DPAN4xoajPh5PGA&index=4
+				 - https://www.youtube.com/watch?v=iEuP8GzCJwQ
+
+-- Grbl 1.1 modificado para uso com servo motor: https://github.com/lavolpecheprogramma/grbl-1-1h-servo
+-- Mais informações sobre a modificação para servo motor: https://github.com/DWiskow/grbl1-1g-Servo
+-- Comandos: 	- M3 S255     (turn servo full on)
+		- M5          (turn servo off)
+		- M3 S125     (turn servo half way)
+		- M3 S0       (turn servo on full off - similar to M5)
+
+-> GUI
+- When have started to feel comfortable with G-code/CNC and you're ready to run a whole G-code program, we recommend that you use one of the many great GUIs that users have written to stream your G-code programs to Grbl and to fully harness all of Grbl's capabilities.
+- Universal G-code Sender (UGS)
+-- https://github.com/winder/Universal-G-Code-Sender
+-- Baixar o UGS Platform
+-- Instalar Java previamente (https://www.java.com/pt-BR/download/ie_manual.jsp?locale=pt_BR)
+
+-> Arduino
+- Baixar e instalar a IDE do Arduino (https://www.arduino.cc/en/software)
+
+
+-> Passo-a-passo para a instalação:
+1) Conectando o Arduino ao computador
+-- Baixar e instalar a IDE do Arduino (https://www.arduino.cc/en/software)
+-- Conectar o cabo do Arduino ao computador
+-- Abrir o programa IDE do Arduino
+-- Verificar a porta com que o Arduino está conectato ao computador (gerenciador de dispositivos do Windows)
+-- Ir em Ferramentas > Placa > Selecionar "Arduino Uno"
+-- Ir em Ferramentas > Porta > Selecionar a porta COM que o Arduino está conectado
+-- Enviar um arquivo de teste p/ verificar o funcionamento do Arduino. Ir em Arquivo > Exemplos > 01. Basics > Blink. Verificar e Carregar o código
+
+2) Adicionando o grbl a biblioteca do IDE Arduino e carregando-o no Arduino
+-- Baixar o grbl modificado para uso de servo motores e descompactar ("grbl-1-1h-servo-master")
+-- Abrir IDE do Arduino
+-- Ir até Sketch > Incluir Biblioteca > Adicionar biblioteca .ZIP. Escolher a pasta "grbl" dentro da pasta descompactada ("grbl-1-1h-servo-master")
+-- *Não esquecer de modificar o arquivo config.h dentro da pasta grbl descompactada. Buscar por #define USE_SPINDLE_DIR_AS_ENABLE_PIN. Comentar essa linha de código. (Modificação para modificar a configuração de pino de Arduino de forma que esteja conforme as saídas indicadas do CNC Shield)
+-- It até Arquivo > Exemplos > grbl > grblUpload. Verificar e carregar o grblUpload para o Arduino
+-- Verificar se o grbl foi carregado no Arduino. Ir até Feramentas > Monitor Serial. Modificar a velocidade de trasnferência para 115200. Digitar $$ na linha de comando. Caso o grbl tenha sido carregado adequadamente para o Arduino, nesse modo deverão estar listadas as configurações do GRBL no monitor serial
+
+3) Configurando o grbl
+-- Baixar e executar o universal g-code sender (https://github.com/winder/Universal-G-Code-Sender)
+-- Executar o arquivo ugsplatform64
+-- Selecionar a porta em que o Arduino está conectado. Selecionar o baud rate correto: 115200. Conectar o Arduino
+-- Ir até Machine > Firmware settings. Carregar firmware settings (firmware_2021-12-12_Homing(X+Y-)_Grbl1_1j)
+-- Fazer o homing (modificar $23 se deseja trocar a posição inicial)
+-- Máquina pronta para o uso
+
+4) Configurando o Inkscape e verificando a resolução da máquina
+- Baixar e instalar o Inkscape 0.92 (Versões mais recentes pode dar erro!)
+- Copiar a pasta MI Inkscape Extension para C/Arquivos de Programas/Inskscape/share/extensions
+- Copiar o conteúdo da pasta MI Inkscape Extension para C/Arquivos de Programas/Inskscape/share/extensions
+- Copiar o arquivo "servo" para C/Arquivos de Programas/Inskscape/share/extensions
+- Executar Inkscape
+- Ir até File > Documents and Properties. Na aba Page, modificar Units para mm. Modificar Width e Height para o tamanho da área útil de trabalho (W: 300 x H: 220)
+- De forma a verificar se a máquina está com a resolução correta, desenhe um quadrado de 20x20
+- Ir até Path > Object to Path
+- Ir até Extensions > MIGRBL Z-AXIS Servo Controller > MI GRBL Z-AXIS Servo Controller...
+- Modificar as configurações de acordo com sua preferência
+- Clicar em Apply para gerar o gcode
+- Abrir o Universal G-Code Sender (UGS). Conectar o Arduino
+- Abrir e executar o gcode gerado anteriormente
+- Verirficar se as dimensões reais do quadrado batem com as dimensões colocadas no Inkscape 
+
+
+CORRIGIR INTEFERÊNCIA NO SERVO MOTOR COM A MOVIMENTAÇÂO NOS EIXOS
